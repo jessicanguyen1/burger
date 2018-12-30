@@ -1,36 +1,18 @@
-// Require express, method-override, body-parser
-var express = require("express");
-var methodOverride = require("method-override");
-var bodyParser = require("body-parser");
-var exhbs = require("express-handlebars");
+const express = require('express');
+const exphbs = require('express-handlebars');
+const routes = require('./controllers/burgers_controller.js');
 
-// Import routes and give the server access to them
-var routes = require("./controllers/burgers_controller.js");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-var app = express();
-var PORT = process.env.PORT || 8080;
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static('public'));
+app.use(routes);
 
-// Express middleware // Parse application/json
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
-// Override with POST having ?_method=DELETE
-app.use(methodOverride('_method'));
-
-// Add view engine for the app
-app.engine("handlebars", exhbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
-
-
-// Create server initial route
-app.get("/", function (req, res) {
-    res.render("index");
-});
-
-app.use('/', routes);
-
-
-// Listener
 app.listen(PORT, function () {
-    console.log(`App Listening on PORT: ${PORT}`);
+    console.log('App listening on PORT ' + PORT);
 });
