@@ -1,3 +1,9 @@
+// Pull in required dependencies
+var mysql = require('mysql');
+
+// Create the MySQL connection object
+var connection;
+
 // Create the ORM object to perform SQL queries
 var orm = {
     // Function that returns all table entries
