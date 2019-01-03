@@ -9,6 +9,10 @@ router.get("/", function (req, res) {
     });
 });
 
+router.get("/add-burger", function (req, res) {
+    res.render("add-burger");
+});
+
 router.post("/api/burgers", function (req, res) {
     burger.insertOne(req.body.newBurger, function (result) {
         res.json({ id: result.insertId });
