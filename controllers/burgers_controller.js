@@ -16,25 +16,44 @@ router.post("/api/burgers", function (req, res) {
     });
 });
 
-router.put("/:id", function (req, res) {
-    var id = req.params.id;
+router.delete("/api/burgers/:id", function (req, res) {
 
-    console.log("id", id);
+    var condition = "id = " + req.params.id;
 
-    burger.updateOne(id, function () {
+    burger.deleteOne(condition, function (result) {
         res.redirect("/");
     });
+
 });
 
-router.delete("/api/burgers/:id", function (req, res) {
-    var id = req.params.id;
-    burger.deleteOne(id, function (result) {
-        if (result.affectedRows == 0) {
-            return res.status(404).end();
-        } else {
-            res.status(200).end();
-        }
-    });
-});
+
 
 module.exports = router;
+
+
+
+
+
+
+
+
+// router.put("/:id", function (req, res) {
+//     var id = req.params.id;
+
+//     console.log("id", id);
+
+//     burger.updateOne(id, function () {
+//         res.redirect("/");
+//     });
+// });
+
+// router.delete("/api/burgers/:id", function (req, res) {
+//     var id = req.params.id;
+//     burger.deleteOne(id, function (result) {
+//         if (result.affectedRows == 0) {
+//             return res.status(404).end();
+//         } else {
+//             res.status(200).end();
+//         }
+//     });
+// });
